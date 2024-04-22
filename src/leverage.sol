@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract SyntheticLeverage {
+contract Leverage {
     IERC20 public collateralToken; // ERC-20 token used as collateral
     address public owner;
 
@@ -11,7 +12,10 @@ contract SyntheticLeverage {
         uint256 leverage;
         bool isLong; // True for long, False for short
     }
-
+    uint256 syntheticPriceChange= 15 * 1e18;
+    bool isUpward=true; // indicates direction of price change
+    
+    //one user can have only one position
     mapping(address => Position) public positions; // Track user positions
 
     constructor(address _collateralToken) {
@@ -19,15 +23,15 @@ contract SyntheticLeverage {
         owner = msg.sender;
     }
 
-    // modifier onlyOwner {
-    //     require(msg.sender == owner, "Not owner");
-    //     _;
-    // }
+    modifier onlyOwner {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
 
-    //should be onlyOwner, skipped for demonstrative purposes. 
-    function getPriceChange() public pure returns(bool,uint){
-        uint256 syntheticPriceChange = 15;
-        bool isUpward=true;
+   
+    function setPriceChange(bool _isUpward,uint _syntheticPriceChange) public  onlyOwner returns(bool,uint){
+         syntheticPriceChange = _syntheticPriceChange * 1e18;
+         isUpward=_isUpward;
         return (isUpward,syntheticPriceChange);
     }
 
@@ -51,7 +55,6 @@ contract SyntheticLeverage {
     function closePosition() public {
         Position storage pos = positions[msg.sender];
         require(pos.collateral > 0, "No open position");
-        (bool isUpward,uint256 syntheticPriceChange) = getPriceChange();
         uint256 profitLoss = pos.leverage * syntheticPriceChange; // Simplified profit/loss calculation
         if((pos.isLong && !isUpward)|| (!pos.isLong && isUpward)){
             if (pos.collateral < profitLoss){
