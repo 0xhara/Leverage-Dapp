@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import leverageABI from './abi/Leverage.json';
 import erc20ABI from './abi/erc20.json';
 
+// This is linked to leverage V1 contract, deployed locally using anvil. 
 
 // Hardcoded values for simplicity
 const PRIVATE_KEY='0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'; // Be cautious with private keys
