@@ -2,7 +2,9 @@
 
 ## Contract Overview
 - **Contract Name**: LeverageV2.sol
-- **Test file**: leverageV2.t.sol
+- **Test files**:
+  - **Unit tests**: leverageV2.t.sol
+  - **Fuzz tests**: leverageV2Fuzz.t.sol
 - **Functionality**: A simple smart contract for leveraged trading of ERC-20 tokens.
 - **Assumptions**: 
   - Asset price change is fixed for simplicity.
