@@ -1,3 +1,11 @@
+# About : 
+This is a toy project demonstrating a simple leverage trading system
+# Enhancement Plans
+- Integrate with any crypto assets and  Oracles for price feeds: Can use chainlink
+- Core Algo refinement : enhance the core algorithm to closely mimic real-world leverage trading strategies through iterative refinement.
+- Improve smart contracts for better security(ex: most functions in the contract are public) and gas efficiency.
+- Build a front end
+
 # LeverageV2 Contract Workflow
 
 ## Contract Overview
